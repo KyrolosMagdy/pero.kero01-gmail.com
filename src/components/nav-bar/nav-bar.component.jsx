@@ -1,16 +1,28 @@
 import React from 'react';
+import './nav-bar.styles.css';
 
-const Header = () => (
-    <div className='header'>
-      <div className='options'>
-        <p className='option' >
-          Sign-in
-        </p>
-        <p className='option' >
-          Sing-Up
-        </p>
+const NavBar = ({ currentRoute }) => {
+  return(
+    <nav className = 'container'> 
+      <div className = 'options'>
+        {
+          currentRoute === 'signin' ? 
+            <div className = "options">
+              <p className = 'option'> Sign In </p>
+            </div>
+            : 
+            <div className="options">
+              <p className = 'option'> Sing out</p> 
+              <p className ='option'> Home </p>
+            </div>
+            
+        }
+        
+        
       </div>
-    </div>
-);
+      
+    </nav>
+  )   
+};
 
-export default Header;
+export default NavBar;

@@ -38,6 +38,7 @@ class Form extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        const {onRouteChange} = this.props;
 
         if (formValid(this.state)) {
             console.log(`
@@ -46,7 +47,8 @@ class Form extends Component {
         lastName: ${this.state.lastName},
         email: ${this.state.email},
         password: ${this.state.password},
-      `)
+      `);
+            onRouteChange();
         } else {
             console.error('error')
         }

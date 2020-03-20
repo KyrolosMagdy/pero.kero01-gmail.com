@@ -31,8 +31,14 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 **Note: these notes provided by Me Kyrolos Magdy**
 
-We didn't used any kind of liberaries here but if I was asked to improve this code here is what I well do
+if I was asked to improve this code here is what I well do: 
 
-1- implement react-router 
-2- add style-components
-3- implement tokens and session managment in a more secure manners
+1- implement react-router.
+
+2- add style-components (and more css improvements).
+
+3- implement tokens and session management in a more secure manners.
+
+4- add lazy-loader (so we can only render what the user will see and use and not the whole app).
+
+5- I would recommend using redux-saga for managing states.
