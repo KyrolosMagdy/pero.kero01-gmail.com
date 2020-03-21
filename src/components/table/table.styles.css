@@ -1,6 +1,19 @@
-.title {
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.tableContainer{
+  width: 50%
+}
+
+.tableTitle {
+    display: flex;
     text-align: center;
     font-family: arial, sans-serif;
+    justify-content: center;
   }
   
   .students {

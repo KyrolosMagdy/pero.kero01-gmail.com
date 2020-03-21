@@ -37,8 +37,9 @@ class Table extends Component {
 
    render() {
       return (
-         <div>
-            <h1 className='title'>Previous Messages</h1>
+         <div className='mainContainer'>
+         <div className = 'tableContainer'>
+            <h1 className='tableTitle'>Previous Messages</h1>
             <table className='students'>
                <tbody>
                   <tr>{this.renderTableHeader()}</tr>
@@ -46,6 +47,8 @@ class Table extends Component {
                </tbody>
             </table>
          </div>
+         </div>
+         
       )
    }
 }

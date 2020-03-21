@@ -42,3 +42,5 @@ if I was asked to improve this code here is what I well do:
 4- add lazy-loader (so we can only render what the user will see and use and not the whole app).
 
 5- I would recommend using redux-saga for managing states.
+
+6-delete the duplicated code. (I tried to focus on the logic here)
