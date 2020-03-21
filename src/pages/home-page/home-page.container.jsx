@@ -1,9 +1,10 @@
 import React from 'react';
+import TableWrapper from '../../components/table-wrapper/table-wrapper.component';
 
 const HomePage = () => {
     return (
         <div>
-            <p> Hello </p>
+            <TableWrapper />
         </div>
     )
 };

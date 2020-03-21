@@ -5,16 +5,18 @@
     margin: 0;  
     background-color:  #9de4d1;
     height: 6em;
+    justify-content: flex-end;
 }  
   
 .options {  
-    margin-left: auto;
-    width: 100%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .option {
-    display: flex;
-    justify-content: end;
     align-items: center;
     padding: 0.5em;
     cursor: pointer;

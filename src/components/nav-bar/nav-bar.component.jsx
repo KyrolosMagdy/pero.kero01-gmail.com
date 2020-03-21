@@ -3,8 +3,8 @@ import './nav-bar.styles.css';
 
 const NavBar = ({ currentRoute }) => {
   return(
-    <nav className = 'container'> 
-      <div className = 'options'>
+    <nav className = 'container'>
+     
         {
           currentRoute === 'signin' ? 
             <div className = "options">
@@ -12,14 +12,14 @@ const NavBar = ({ currentRoute }) => {
             </div>
             : 
             <div className="options">
-              <p className = 'option'> Sing out</p> 
               <p className ='option'> Home </p>
+              <p className = 'option'> Sing out</p> 
             </div>
             
         }
         
         
-      </div>
+
       
     </nav>
   )   
