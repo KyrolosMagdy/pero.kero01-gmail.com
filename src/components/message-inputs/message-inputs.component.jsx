@@ -1,6 +1,24 @@
 import React from 'react';
 import './message-input.styles.css';
 
+const emailRegex = RegExp(
+    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
+
+const formValid = ({ formErrors, ...rest }) => {
+    let valid = true;
+
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 ? valid = false : valid = true
+    })
+
+    Object.values(rest).forEach(val => {
+        !val.length && (valid = false)
+    })
+    return valid;
+}
+
+
 class InputsForm extends React.Component {
     constructor(props) {
         super(props);
@@ -16,11 +34,47 @@ class InputsForm extends React.Component {
         };
     }
 
-    handleInputChange = (e) => {
-        const { name, value } = e.target;
-        console.log(`name: ${name},
-        value: ${value}
-    `)
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const {onRouteChange} = this.props;
+
+        if (formValid(this.state)) {
+            console.log(`
+        Submitting
+        messageTitle: ${this.state.messageTitle}
+        messageContent: ${this.state.messageContent},
+        email: ${this.state.messageTo}
+      `);
+            onRouteChange('home');
+        } else {
+            console.error('error')
+        }
+    };
+
+    handleInputChange = (event) => {
+        event.preventDefault();
+        const { name, value } = event.target;
+        let formErrors = this.state.formErrors;
+
+        switch (name) {
+            case 'messageTitle':
+                formErrors.messageTitle = value.length < 3 ? 'Minimum 3 characaters required' : '';
+                break;
+
+            case 'messageContent':
+                formErrors.messageContent = value.length < 20 ? 'Minimum 20 characaters required' : '';
+                break;
+            case 'messageTo':
+                formErrors.messageTo = emailRegex.test(value) ? '' : 'invalid email address';
+                break;
+
+            default:
+                break;
+        }
+        this.setState({
+            formErrors, [name]: value
+        }, () => console.log(this.state))
+    
     }
 
     handleClick = (e) => {
