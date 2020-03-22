@@ -25,8 +25,8 @@ class InputsForm extends React.Component {
 
     handleClick = (e) => {
         e.preventDefault();
-        const {onClick} = this.props;
-        onClick();
+        const {handleClick} = this.props;
+        handleClick();
     }
 
     render() {

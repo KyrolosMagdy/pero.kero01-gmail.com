@@ -2,6 +2,7 @@ import React from 'react';
 import Form from './pages/form/form.component';
 import NavBar from './components/nav-bar/nav-bar.component';
 import HomePage from './pages/home-page/home-page.container';
+import SignIn from './pages/signin-form/signin-form.page';
 
 class App extends React.Component {
   constructor() {
@@ -11,23 +12,24 @@ class App extends React.Component {
     }
   }
 
-  onRouteChange = () => {
+  onRouteChange = (route) => {
     this.setState({
-      route: 'home'
+      route:route
     })
   }
 
   render() {
     return (
       <div >
-        <NavBar currentRoute={this.state.route} />
+        <NavBar currentRoute={this.state.route} onRouteChange={this.onRouteChange}/>
         {
-          this.state.route === 'signin' ?
-            <div>
+          this.state.route === 'home' ?
+          <HomePage /> : (
+            this.state.route === 'signin' ? <SignIn onRouteChange={this.onRouteChange} />:
               <Form onRouteChange={this.onRouteChange} />
-            </div> :
+          )
             //supposed to have home-page here
-            <HomePage />
+            
         }
       </div>
     )

@@ -48,7 +48,7 @@ class Form extends Component {
         email: ${this.state.email},
         password: ${this.state.password},
       `);
-            onRouteChange();
+            onRouteChange('home');
         } else {
             console.error('error')
         }
@@ -84,6 +84,7 @@ class Form extends Component {
 
     render() {
         const { formErrors } = this.state;
+        const { onRouteChange } = this.props;
         return (
             <div className="wrapper" >
                 <div className="form-wrapper">
@@ -147,7 +148,7 @@ class Form extends Component {
                         </div>
                         <div className="createAccount" >
                             <button type="submit"> Create Account</button>
-                            <small> Already have an account</small>
+                            <small className='smallButton' onClick={() => onRouteChange('signin')}> Already have an account</small>
                         </div>
                     </form>
                 </div>

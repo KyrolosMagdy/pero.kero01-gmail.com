@@ -22,7 +22,7 @@ class HomePage extends React.Component {
             <div>
                 <TableWrapper />
                 {
-                    this.state.sendMessageTriggered ? <InputsForm onclick={this.state.handleClick}/> : 
+                    this.state.sendMessageTriggered ? <InputsForm handleClick={this.handleClick}/> : 
                         <div className='buttonWrapper'>
                             <div className="sendMessage" >
                                 <button type="submit" onClick={this.handleClick}> Send Message </button>

@@ -1,28 +1,21 @@
 import React from 'react';
 import './nav-bar.styles.css';
-
-const NavBar = ({ currentRoute }) => {
-  return(
-    <nav className = 'container'>
-     
+const NavBar = ({onRouteChange, currentRoute}) => {
+    return (
+      <nav className='container' >
         {
-          currentRoute === 'signin' ? 
-            <div className = "options">
-              <p className = 'option'> Sign In </p>
-            </div>
-            : 
+          currentRoute === 'signin' ?
             <div className="options">
-              <p className ='option'> Home </p>
-              <p className = 'option'> Sing out</p> 
+              <p className='option' onClick={() => onRouteChange('register')}> Register </p>
             </div>
-            
-        }
-        
-        
+            :
+            <div className='options'>
+              <p className='option' onClick={() => onRouteChange('signin')}> Sing out</p>
+            </div>
 
-      
-    </nav>
-  )   
+        }
+      </nav>
+    )
 };
 
 export default NavBar;
