@@ -24,10 +24,10 @@ class InputsForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messageTitle: '',
-            messageContent: '',
+            title: '',
+            content: '',
             to: '',
-            messages: [],
+            posts: [],
             messageLoading: true,
             totalMessages: 0,
             postPage: 1,
@@ -38,6 +38,64 @@ class InputsForm extends React.Component {
             }
         };
     }
+
+    finishEditHandler = postData => {
+
+        // Set up data 
+        let url = 'http://localhost:3001/feed/post';
+        let method = 'POST';
+        fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: postData.title,
+                content: postData.content
+            })
+        })
+            .then(res => {
+                if (res.status !== 200 && res.status !== 201) {
+                    throw new Error('Creating or editing a post failed!');
+                }
+                return res.json();
+            })
+            .then(resData => {
+                const post = {
+                    _id: resData.post._id,
+                    title: resData.post.title,
+                    content: resData.post.content,
+                    creator: resData.post.creator,
+                    createdAt: resData.post.createdAt
+                };
+                this.setState(prevState => {
+                    let updatedPosts = [...prevState.posts];
+                    if (prevState.editPost) {
+                        const postIndex = prevState.posts.findIndex(
+                            p => p._id === prevState.editPost._id
+                        );
+                        updatedPosts[postIndex] = post;
+                    } else if (prevState.posts.length < 2) {
+                        updatedPosts = prevState.posts.concat(post);
+                    }
+                    return {
+                        posts: updatedPosts,
+                        isEditing: false,
+                        editPost: null,
+                        editLoading: false
+                    };
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({
+                    isEditing: false,
+                    editPost: null,
+                    editLoading: false,
+                    error: err
+                });
+            });
+    };
     
     handleSubmit = (event) => {
         event.preventDefault();
@@ -45,11 +103,11 @@ class InputsForm extends React.Component {
 
         if (formValid(this.state)) {
             console.log(`
-        Submitting
-        messageTitle: ${this.state.messageTitle}
-        messageContent: ${this.state.messageContent},
-        email: ${this.state.messageTo}
-      `);
+                Submitting
+                messageTitle: ${this.state.messageTitle}
+                messageContent: ${this.state.messageContent},
+                email: ${this.state.messageTo}
+            `);
             onRouteChange('home');
         } else {
             console.error('error')
@@ -145,26 +203,6 @@ class InputsForm extends React.Component {
                     </form>
                 </div>
             </div>
-            // <div className='container' >
-            //     <div className='form-wrapper'>
-            //         <form>
-            //             <label>To: </label>
-            //             <input
-            //                 type='email'
-            //                 name='messageTo'
-            //                 onChange={this.handleInputChange}
-            //             />
-            //             <label> Title </label>
-            //             <input
-            //                 type='text'
-            //                 name='messageTitle'
-            //                 onChange={this.handleInputChange}
-            //             />
-
-            //             <textarea name='messageContent' onChange={this.handleInputChange} />
-            //         </form>
-            //     </div>
-            // </div>
         );
 
 

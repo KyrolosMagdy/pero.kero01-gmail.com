@@ -1,7 +1,7 @@
 .button {
   font: inherit;
-  border: 1px solid #1a9776;
-  color: #1a9776;
+  border: 1px solid #3b0062;
+  color: #3b0062;
   background: none;
   padding: 0.5rem 1rem;
   cursor: pointer;
@@ -40,8 +40,8 @@
 
 .button--flat:hover,
 .button--flat:active {
-  background: #1a9776;
-  color: white;
+  background: rgba(59, 0, 98, 0.3);
+  color: #3b0062;
 }
 
 .button--raised {

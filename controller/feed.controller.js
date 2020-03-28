@@ -1,22 +1,25 @@
-exports.getMessages = (req, res) => {
+exports.getPosts = (req, res, next) => {
     res.status(200).json({
-        _id: '45',
-        messageTo: "pero.kero01@gmail.com",
-        messageFrom: "test@test.js",
-        messageTitle: "Hello",
-        messgeDate: new Date().toISOString() 
-    })
-}
-
-exports.postMessages = (req, res) => {
-    const {
-        messageTitle, 
-        messageContent
-    } = req.body;
-    //creat it into db 
-    res.status(200).json({
-        message: messageContent,
-        title: messageTitle,
-        date: new Date()
-    })
-}
+      posts: [{ 
+        _id: '1',
+        title: 'First Post', 
+        content: 'This is the first post!',
+        imageUrl: 'jedhgjdkg',
+        creator: {
+            name: 'Kyrolos'
+        },
+        createdAt: new Date()
+    }]
+    });
+  };
+  
+  exports.createPost = (req, res, next) => {
+    const title = req.body.title;
+    const content = req.body.content;
+    // Create post in db
+    res.status(201).json({
+      message: 'Post created successfully!',
+      post: { id: new Date().toISOString(), title: title, content: content }
+    });
+  };
+  

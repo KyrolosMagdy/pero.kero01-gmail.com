@@ -4,10 +4,10 @@ const feedController = require('../controller/feed.controller');
 
 const router = express.Router();
 
-//GEt  /feed/messages
-router.get('/messages', feedController.getMessages);
+// GET /feed/posts
+router.get('/posts', feedController.getPosts);
 
-//Post  /feed/messages
-router.post('/messages', feedController.postMessages);
+// POST /feed/post
+router.post('/post', feedController.createPost);
 
 module.exports = router;

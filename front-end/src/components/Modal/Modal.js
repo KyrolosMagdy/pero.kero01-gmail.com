@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Button from '../button/button.component';
-import './Modal.css';
 
+import Button from '../Button/Button';
+import './Modal.css';
 
 const modal = props =>
   ReactDOM.createPortal(
@@ -12,14 +12,17 @@ const modal = props =>
       </header>
       <div className="modal__content">{props.children}</div>
       <div className="modal__actions">
-        <Button design="danger" mode="flat" onClick={props.onCancelModal} buttonContent={'Cancel'}/>
+        <Button design="danger" mode="flat" onClick={props.onCancelModal}>
+          Cancel
+        </Button>
         <Button
           mode="raised"
           onClick={props.onAcceptModal}
           disabled={!props.acceptEnabled}
           loading={props.isLoading}
-          buttonContent={'Accept'}
-        />
+        >
+          Accept
+        </Button>
       </div>
     </div>,
     document.getElementById('modal-root')
