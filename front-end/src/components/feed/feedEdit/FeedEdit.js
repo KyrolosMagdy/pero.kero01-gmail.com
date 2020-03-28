@@ -3,10 +3,7 @@ import React, { Component, Fragment } from 'react';
 import Backdrop from '../../Backdrop/Backdrop';
 import Modal from '../../Modal/Modal';
 import Input from '../../Form/Input/Input';
-import FilePicker from '../../Form/Input/FilePicker';
-import Image from '../../Image/Image';
-import { required, length } from '../../../util/validators';
-import { generateBase64FromImage } from '../../../util/image';
+import { required, length, email } from '../../../util/validators';
 
 const POST_FORM = {
   title: {
@@ -15,11 +12,11 @@ const POST_FORM = {
     touched: false,
     validators: [required, length({ min: 5 })]
   },
-  image: {
+  reciever: {
     value: '',
     valid: false,
     touched: false,
-    validators: [required]
+    validators: [required, email]
   },
   content: {
     value: '',
@@ -32,8 +29,7 @@ const POST_FORM = {
 class FeedEdit extends Component {
   state = {
     postForm: POST_FORM,
-    formIsValid: false,
-    imagePreview: null
+    formIsValid: false
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,11 +44,6 @@ class FeedEdit extends Component {
           value: this.props.selectedPost.title,
           valid: true
         },
-        image: {
-          ...prevState.postForm.image,
-          value: this.props.selectedPost.imagePath,
-          valid: true
-        },
         content: {
           ...prevState.postForm.content,
           value: this.props.selectedPost.content,
@@ -64,15 +55,6 @@ class FeedEdit extends Component {
   }
 
   postInputChangeHandler = (input, value, files) => {
-    if (files) {
-      generateBase64FromImage(files[0])
-        .then(b64 => {
-          this.setState({ imagePreview: b64 });
-        })
-        .catch(e => {
-          this.setState({ imagePreview: null });
-        });
-    }
     this.setState(prevState => {
       let isValid = true;
       for (const validator of prevState.postForm[input].validators) {
@@ -122,14 +104,13 @@ class FeedEdit extends Component {
   acceptPostChangeHandler = () => {
     const post = {
       title: this.state.postForm.title.value,
-      image: this.state.postForm.image.value,
+      reciever: this.state.postForm.reciever.value,
       content: this.state.postForm.content.value
     };
     this.props.onFinishEdit(post);
     this.setState({
       postForm: POST_FORM,
-      formIsValid: false,
-      imagePreview: null
+      formIsValid: false
     });
   };
 
@@ -155,21 +136,16 @@ class FeedEdit extends Component {
               touched={this.state.postForm['title'].touched}
               value={this.state.postForm['title'].value}
             />
-            <FilePicker
-              id="image"
-              label="Image"
+            <Input
+              id="reciever"
+              label="reciever"
               control="input"
               onChange={this.postInputChangeHandler}
-              onBlur={this.inputBlurHandler.bind(this, 'image')}
-              valid={this.state.postForm['image'].valid}
-              touched={this.state.postForm['image'].touched}
+              onBlur={this.inputBlurHandler.bind(this, 'reciever')}
+              valid={this.state.postForm['reciever'].valid}
+              touched={this.state.postForm['reciever'].touched}
+              value={this.state.postForm['reciever'].value}
             />
-            <div className="new-post__preview-image">
-              {!this.state.imagePreview && <p>Please choose an image.</p>}
-              {this.state.imagePreview && (
-                <Image imageUrl={this.state.imagePreview} contain left />
-              )}
-            </div>
             <Input
               id="content"
               label="Content"

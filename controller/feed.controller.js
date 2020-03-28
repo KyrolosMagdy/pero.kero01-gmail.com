@@ -4,22 +4,33 @@ exports.getPosts = (req, res, next) => {
         _id: '1',
         title: 'First Post', 
         content: 'This is the first post!',
-        imageUrl: 'jedhgjdkg',
         creator: {
             name: 'Kyrolos'
         },
+        reciever: 'test@test.js',
         createdAt: new Date()
     }]
     });
   };
   
   exports.createPost = (req, res, next) => {
+    
     const title = req.body.title;
+    const reciever = req.body.reciever;
     const content = req.body.content;
     // Create post in db
     res.status(201).json({
       message: 'Post created successfully!',
-      post: { id: new Date().toISOString(), title: title, content: content }
+      post: { 
+        _id: new Date().toISOString(),
+        creator: {
+          name: 'Kyrolos'
+        },
+        createdAt: new Date(), 
+        title: title, 
+        content: content, 
+        reciever: reciever 
+      }
     });
   };
   
