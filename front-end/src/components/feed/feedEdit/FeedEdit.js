@@ -44,6 +44,11 @@ class FeedEdit extends Component {
           value: this.props.selectedPost.title,
           valid: true
         },
+        reciever: {
+          ...prevState.postForm.content,
+          value: this.props.selectedPost.reciever,
+          valid: true
+        },
         content: {
           ...prevState.postForm.content,
           value: this.props.selectedPost.content,
@@ -138,7 +143,7 @@ class FeedEdit extends Component {
             />
             <Input
               id="reciever"
-              label="reciever"
+              label="Reciever"
               control="input"
               onChange={this.postInputChangeHandler}
               onBlur={this.inputBlurHandler.bind(this, 'reciever')}

@@ -88,7 +88,7 @@ class Feed extends Component {
   startEditPostHandler = postId => {
     this.setState(prevState => {
       const loadedPost = { ...prevState.posts.find(p => p._id === postId) };
-
+      console.log('that is the post we are trying to edit' ,loadedPost)
       return {
         isEditing: true,
         editPost: loadedPost
@@ -107,8 +107,10 @@ class Feed extends Component {
     // Set up data (with image!)
     let url = 'http://localhost:3001/feed/post';
     let method = 'POST';
+    console.log('we dont reach what we expects')
     if (this.state.editPost) {
-      url = 'URL';
+      url = `http://localhost:3001/feed/post/${this.state.editPost._id}`;
+      method = 'PUT'
     }
 
     fetch(url, {

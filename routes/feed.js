@@ -10,4 +10,8 @@ router.get('/posts', feedController.getPosts);
 // POST /feed/post
 router.post('/post', feedController.createPost);
 
+router.get('/post/:postId', feedController.getPost);
+
+router.put('/post/:postId', feedController.updatePost);
+
 module.exports = router;

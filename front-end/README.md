@@ -33,14 +33,14 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 if I was asked to improve this code here is what I well do: 
 
-1- implement react-router.
+1- add style-components (and more css improvements).
 
-2- add style-components (and more css improvements).
+2- implement tokens and session management in a more secure manners.
 
-3- implement tokens and session management in a more secure manners.
+3- add lazy-loader (so we can only render what the user will see and use and not the whole app).
 
-4- add lazy-loader (so we can only render what the user will see and use and not the whole app).
+4- I would recommend using redux-saga for managing states.
 
-5- I would recommend using redux-saga for managing states.
+5-delete the duplicated code. (I tried to focus on the logic here)
 
-6-delete the duplicated code. (I tried to focus on the logic here)
+6- implemetn express-validator

@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const feedRoutes = require('./routes/feed');
+require('dotenv').config({path: __dirname + '/.env'})
 
 const app = express();
 
@@ -16,6 +18,8 @@ app.use((req, res, next) => {
 
 app.use('/feed', feedRoutes);
 
-app.listen(3001, () => {
-    console.log('listingin on port 3001')
+mongoose.connect(process.env.MONGODB_URL).then(result => {
+    app.listen(process.env.PORT)
+}).catch(err=> {
+    console.log(err)
 })
