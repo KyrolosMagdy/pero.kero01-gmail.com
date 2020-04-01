@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from "react";
 
-import Post from '../../components/Feed/Post/Post';
-import Button from '../../components/Button/Button';
-import FeedEdit from '../../components/Feed/FeedEdit/FeedEdit';
-import Paginator from '../../components/Paginator/Paginator';
-import Loader from '../../components/Loader/Loader';
-import ErrorHandler from '../../components/ErrorHandler/ErrorHandler';
-import './Feed.css';
+import Post from "../../components/Feed/Post/Post";
+import Button from "../../components/Button/Button";
+import FeedEdit from "../../components/Feed/FeedEdit/FeedEdit";
+import Paginator from "../../components/Paginator/Paginator";
+import Loader from "../../components/Loader/Loader";
+import ErrorHandler from "../../components/ErrorHandler/ErrorHandler";
+import "./Feed.css";
 
 class Feed extends Component {
   state = {
@@ -14,17 +14,17 @@ class Feed extends Component {
     posts: [],
     totalPosts: 0,
     editPost: null,
-    status: '',
+    status: "",
     postPage: 1,
     postsLoading: true,
     editLoading: false
   };
 
   componentDidMount() {
-    fetch('URL')
+    fetch("URL")
       .then(res => {
         if (res.status !== 200) {
-          throw new Error('Failed to fetch user status.');
+          throw new Error("Failed to fetch user status.");
         }
         return res.json();
       })
@@ -41,18 +41,22 @@ class Feed extends Component {
       this.setState({ postsLoading: true, posts: [] });
     }
     let page = this.state.postPage;
-    if (direction === 'next') {
+    if (direction === "next") {
       page++;
       this.setState({ postPage: page });
     }
-    if (direction === 'previous') {
+    if (direction === "previous") {
       page--;
       this.setState({ postPage: page });
     }
-    fetch('http://localhost:3001/feed/posts?page=' + page)
+    fetch("http://localhost:3001/feed/posts?page=" + page, {
+      headers: {
+        Authorization: "Bearer " + this.props.token
+      }
+    })
       .then(res => {
         if (res.status !== 200) {
-          throw new Error('Failed to fetch posts.');
+          throw new Error("Failed to fetch posts.");
         }
         return res.json();
       })
@@ -68,7 +72,7 @@ class Feed extends Component {
 
   statusUpdateHandler = event => {
     event.preventDefault();
-    fetch('URL')
+    fetch("URL")
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error("Can't update status!");
@@ -88,7 +92,7 @@ class Feed extends Component {
   startEditPostHandler = postId => {
     this.setState(prevState => {
       const loadedPost = { ...prevState.posts.find(p => p._id === postId) };
-      console.log('that is the post we are trying to edit' ,loadedPost)
+      console.log("that is the post we are trying to edit", loadedPost);
       return {
         isEditing: true,
         editPost: loadedPost
@@ -105,28 +109,29 @@ class Feed extends Component {
       editLoading: true
     });
     // Set up data (with image!)
-    let url = 'http://localhost:3001/feed/post';
-    let method = 'POST';
-    console.log('we dont reach what we expects')
+    let url = "http://localhost:3001/feed/post";
+    let method = "POST";
+    console.log("we dont reach what we expects");
     if (this.state.editPost) {
       url = `http://localhost:3001/feed/post/${this.state.editPost._id}`;
-      method = 'PUT'
+      method = "PUT";
     }
 
     fetch(url, {
       method: method,
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.token
       },
       body: JSON.stringify({
         title: postData.title,
         reciever: postData.reciever,
-        content: postData.content  
+        content: postData.content
       })
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Creating or editing a post failed!');
+          throw new Error("Creating or editing a post failed!");
         }
         return res.json();
       })
@@ -175,11 +180,14 @@ class Feed extends Component {
   deletePostHandler = postId => {
     this.setState({ postsLoading: true });
     fetch(`http://localhost:3001/feed/post/${postId}`, {
-      method: 'DELETE'
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + this.props.token
+      }
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Deleting a post failed!');
+          throw new Error("Deleting a post failed!");
         }
         return res.json();
       })
@@ -214,7 +222,7 @@ class Feed extends Component {
           loading={this.state.editLoading}
           onCancelEdit={this.cancelEditHandler}
           onFinishEdit={this.finishEditHandler}
-        />        
+        />
         <section className="feed__control">
           <Button mode="raised" design="accent" onClick={this.newPostHandler}>
             New Post
@@ -222,17 +230,17 @@ class Feed extends Component {
         </section>
         <section className="feed">
           {this.state.postsLoading && (
-            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+            <div style={{ textAlign: "center", marginTop: "2rem" }}>
               <Loader />
             </div>
           )}
           {this.state.posts.length <= 0 && !this.state.postsLoading ? (
-            <p style={{ textAlign: 'center' }}>No posts found.</p>
+            <p style={{ textAlign: "center" }}>No posts found.</p>
           ) : null}
           {!this.state.postsLoading && (
             <Paginator
-              onPrevious={this.loadPosts.bind(this, 'previous')}
-              onNext={this.loadPosts.bind(this, 'next')}
+              onPrevious={this.loadPosts.bind(this, "previous")}
+              onNext={this.loadPosts.bind(this, "next")}
               lastPage={Math.ceil(this.state.totalPosts / 2)}
               currentPage={this.state.postPage}
             >
@@ -241,7 +249,7 @@ class Feed extends Component {
                   key={post._id}
                   id={post._id}
                   author={post.creator.name}
-                  date={new Date(post.createdAt).toLocaleDateString('en-US')}
+                  date={new Date(post.createdAt).toLocaleDateString("en-US")}
                   title={post.title}
                   reciever={post.reciever}
                   image={post.imageUrl}

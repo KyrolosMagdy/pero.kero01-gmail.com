@@ -33,9 +33,9 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 if I was asked to improve this code here is what I well do: 
 
-1- add style-components (and more css improvements).
+1- add styled-components (and more CSS improvements).
 
-2- implement tokens and session management in a more secure manners.
+2- implement tokens and session management more securely.
 
 3- add lazy-loader (so we can only render what the user will see and use and not the whole app).
 
@@ -43,4 +43,6 @@ if I was asked to improve this code here is what I well do:
 
 5-delete the duplicated code. (I tried to focus on the logic here)
 
-6- implemetn express-validator
+6- implement express-validator
+
+7- install bcrypt.js (so we can install passwords encrypted)
