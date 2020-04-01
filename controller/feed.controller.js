@@ -1,26 +1,27 @@
 const Post = require("../modules/post");
 const User = require("../modules/user");
 
-exports.getPosts = (req, res) => {
+exports.getPosts = async (req, res) => {
   const currentPage = req.query.page || 1;
   const perPage = 2;
   let totalItems;
-  Post.find()
-    .countDocuments()
-    .then(count => {
-      totalItems = count;
-      return Post.find()
-        .skip((currentPage - 1) * perPage)
-        .limit(perPage);
-    })
-    .then(posts => {
-      res
-        .status(200)
-        .json({ message: "Posts fetched successfully", posts, totalItems });
-    })
-    .catch(err => {
-      return res.status(422).json({ message: `couldn't find your posts` });
+  try {
+    const totalItems = await Post.find().countDocuments();
+    const posts = await Post.find()
+      .populate("creator")
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage);
+
+    res.status(200).json({
+      message: "Posts fetched successfully",
+      posts,
+      totalItems
     });
+  } catch (err) {
+    return res.status(422).json({
+      message: `couldn't find your posts`
+    });
+  }
 };
 
 exports.createPost = (req, res, next) => {
